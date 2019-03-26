@@ -200,15 +200,18 @@ else:
     for i in range(len(image)):
         for j in range(len(image[0])):
             test[i][j]=image[i][j]
-        
+    
+n=int(len(test)*0.4) #liczba detektorow
+l=int(len(test)*0.7) #rozpietosc detektorow    
 #wykonanie radona
-radonSin=radon(test)
-radonInv=inverseRadon(radonSin)
-
+radonSin=radon(test,ndetectors=n,l=l)
+#l-czyli rozpietosc zmienia sie proporcjonalnie do zmiany wielkosci obrazu 
+l=n*l/len(test)
+radonInv=inverseRadon(radonSin,ndetectors=n,l=l)
 
 plt.subplot(3, 1, 1)
 plt.imshow(test, cmap='gray', interpolation=None)
 plt.subplot(3, 1, 2)
-plt.imshow(radonSin, cmap='gray', interpolation=None)
+plt.imshow(radonSin, cmap='gray', extent=[0,180,len(radonSin),0], interpolation=None)
 plt.subplot(3, 1, 3)
 plt.imshow(radonInv, cmap='gray',  interpolation=None)
