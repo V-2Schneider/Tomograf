@@ -10,6 +10,8 @@ xa,ya,xb,yb-wspolrzedne koncow odcinka
 w,h-srodek obrazu
 inv=True-stosujemy algorytm dla odwrotnej transformaty Radona
 '''
+
+
 def bresenham(image,xa,xb,ya,yb,w,h,inv=False,col=1):
     points=[]
     if xa<xb:
@@ -72,14 +74,33 @@ def bresenham(image,xa,xb,ya,yb,w,h,inv=False,col=1):
         return points
     else:
         return image
-   
+
+#rysuje obraz po transformacie
+def drawRadon(img,z):
+    '''rysuje tylko dany krok
+    img/=max(img.flatten())
+    plt.subplot(5, 5, z)
+    plt.imshow(img, cmap='gray', interpolation=None)'''
+    pom=img/max(img.flatten())
+    plt.subplot(8, 5, z)
+    plt.imshow(pom, cmap='gray', interpolation=None)
+    '''fig=plt.figure()
+    ax=fig.add_subplot(1,1,1)
+    pom=img/max(img.flatten())
+    ax.imshow(pom, cmap='gray', interpolation=None)'''
+    
+def drawInvRadon(img,z):
+    img -= min(img.flatten())
+    pom =img/ max(img.flatten())
+    plt.subplot(8, 5, z)
+    plt.imshow(pom, cmap='gray', interpolation=None)
+    
 '''Petla wyznacza kolejne punkty, dla ktorych stosowany jest algorytm  bresenhama.
 Zastosowano model emiterow/detektorow rownolegly'''
 def radonRepeat(inputImg,outputImg,w,h,nsteps,alfa,ndetectors=360,l=360,inv=False):
-    
     #odleglosc miedzy dwoma detektorami
     detectorsDistance=l/(ndetectors-1)
-    
+    z=1
     r=math.sqrt(w*w+h*h) #promien okregu opisanego
     alfa=alfa*math.pi/180 #kat o ktory sie przesuwamy w radianach
     
@@ -148,8 +169,18 @@ def radonRepeat(inputImg,outputImg,w,h,nsteps,alfa,ndetectors=360,l=360,inv=Fals
             else:
                 color=inputImg[j,i]
                 outputImg=bresenham(outputImg,xa,xb,ya,yb,inputImg.shape[0],inputImg.shape[0],True,color)
-            
+        if i%10==0 and inv==False:
+            drawRadon(outputImg,z)
+            z+=1
+        if i%10==0 and inv==True:
+            drawInvRadon(outputImg,z+20)           
+            z+=1
+    if inv==False:
+        drawRadon(outputImg,z)
+    else:
+       drawInvRadon(outputImg,z+20)           
     return outputImg
+
 
 '''
 model rownolegly
@@ -209,9 +240,10 @@ radonSin=radon(test,ndetectors=n,l=l)
 l=n*l/len(test)
 radonInv=inverseRadon(radonSin,ndetectors=n,l=l)
 
-plt.subplot(3, 1, 1)
+'''plt.subplot(3, 1, 1)
 plt.imshow(test, cmap='gray', interpolation=None)
 plt.subplot(3, 1, 2)
 plt.imshow(radonSin, cmap='gray', extent=[0,180,len(radonSin),0], interpolation=None)
 plt.subplot(3, 1, 3)
 plt.imshow(radonInv, cmap='gray',  interpolation=None)
+'''
