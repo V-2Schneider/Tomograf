@@ -187,7 +187,7 @@ def inverseRadon(sinogram,alfa=1,ndetectors=360,l=360):
     return image
 
 
-image = data.imread("mozg.jpg", as_grey=True)
+image = data.imread("Kwadraty2.jpg", as_grey=True)
 
 #dodaje czarne piksele tworzac kwadratowe zdjecie
 test=np.zeros(len(image[0]))
@@ -205,14 +205,10 @@ else:
 radonSin=radon(test)
 radonInv=inverseRadon(radonSin)
 
-#tworzy z powrotem obraz o oryginalnych wymiarach
-for i in range(len(image)):
-    for j in range(len(image[0])):
-        image[i][j]=radonInv[i][j]
 
 plt.subplot(3, 1, 1)
 plt.imshow(test, cmap='gray', interpolation=None)
 plt.subplot(3, 1, 2)
 plt.imshow(radonSin, cmap='gray', interpolation=None)
 plt.subplot(3, 1, 3)
-plt.imshow(image, cmap='gray',  interpolation=None)
+plt.imshow(radonInv, cmap='gray',  interpolation=None)
