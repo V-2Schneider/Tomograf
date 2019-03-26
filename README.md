@@ -1,4 +1,4 @@
 # Tomograf
 Projekt na Informatykę w Medycynie
 
-Tu będzie instrukcja obłsugi i autorzy, ale na wszystko przyjdzie czas
+Tu będzie instrukcja obsługi i autorzy, ale na wszystko przyjdzie czas
