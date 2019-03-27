@@ -6,8 +6,7 @@ Tu będzie instrukcja obsługi i autorzy, ale na wszystko przyjdzie czas
 To na razie niech będzie, co jeszcze jest do zrobienia:
 
 1)Przenieść do jupytera
-2)Nakładanie się na siebie wykresów z kolejnymi krokami rysowania obrazu-iteracyjne rysowanie, nie działa mi to
-3)Dodanie suwaków dla:
+2)Dodanie suwaków dla:
   a) Krok ∆α układu emiter/detektor.
   b) Dla jednego układu emiter/detektor liczbę detektorów (n).
   c) Rozwartość /rozpiętość układu emiter/detektor (l).
