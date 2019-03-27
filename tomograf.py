@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+import cv2
 from skimage import data
   
 '''Podajemy wspolrzedne dwoch punktow, algorytm oblicza dlugosc odcinka, ktory tworza.
@@ -77,23 +78,15 @@ def bresenham(image,xa,xb,ya,yb,w,h,inv=False,col=1):
 
 #rysuje obraz po transformacie
 def drawRadon(img,z):
-    '''rysuje tylko dany krok
-    img/=max(img.flatten())
-    plt.subplot(5, 5, z)
-    plt.imshow(img, cmap='gray', interpolation=None)'''
     pom=img/max(img.flatten())
-    plt.subplot(8, 5, z)
-    plt.imshow(pom, cmap='gray', interpolation=None)
-    '''fig=plt.figure()
-    ax=fig.add_subplot(1,1,1)
-    pom=img/max(img.flatten())
-    ax.imshow(pom, cmap='gray', interpolation=None)'''
+    cv2.imshow('sinogram',pom)
+    cv2.waitKey(1000)
     
 def drawInvRadon(img,z):
     img -= min(img.flatten())
     pom =img/ max(img.flatten())
-    plt.subplot(8, 5, z)
-    plt.imshow(pom, cmap='gray', interpolation=None)
+    cv2.imshow('obraz końcowy',pom)
+    cv2.waitKey(1000)
     
 '''Petla wyznacza kolejne punkty, dla ktorych stosowany jest algorytm  bresenhama.
 Zastosowano model emiterow/detektorow rownolegly'''
@@ -218,7 +211,7 @@ def inverseRadon(sinogram,alfa=1,ndetectors=360,l=360):
     return image
 
 
-image = data.imread("Kwadraty2.jpg", as_grey=True)
+image = cv2.imread("Kwadraty2.jpg", 0)
 
 #dodaje czarne piksele tworzac kwadratowe zdjecie
 test=np.zeros(len(image[0]))
@@ -239,7 +232,8 @@ radonSin=radon(test,ndetectors=n,l=l)
 #l-czyli rozpietosc zmienia sie proporcjonalnie do zmiany wielkosci obrazu 
 l=n*l/len(test)
 radonInv=inverseRadon(radonSin,ndetectors=n,l=l)
-
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 '''plt.subplot(3, 1, 1)
 plt.imshow(test, cmap='gray', interpolation=None)
 plt.subplot(3, 1, 2)
