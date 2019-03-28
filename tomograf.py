@@ -3,7 +3,8 @@ import math
 import matplotlib.pyplot as plt
 import cv2
 from skimage import data
-  
+import dicom
+
 '''Podajemy wspolrzedne dwoch punktow, algorytm oblicza dlugosc odcinka, ktory tworza.
 Dziala tylko na liczbach calkowitych
 image-obraz wejsciowy
@@ -241,3 +242,41 @@ plt.imshow(radonSin, cmap='gray', extent=[0,180,len(radonSin),0], interpolation=
 plt.subplot(3, 1, 3)
 plt.imshow(radonInv, cmap='gray',  interpolation=None)
 '''
+
+def loadDICOM(filename):
+    file = dicom.read_file(filename)
+
+    name = str(file.PatientName)
+    name = name.split('^')
+    lastName = name[0]
+    firstName = name[1]
+    id = str(file.PatientID)
+    birthday = str(file.PatientBirthDate)
+    birthday = birthday[0:4] + "-" + birthday[4:6] + "-" + birthday[6:8]
+    gender = str(file.PatientSex)
+    date = str(file.StudyDate)  # Study date
+    time = str(file.StudyTime)   # Study time
+    date = date[0:4]+"-"+date[4:6]+"-"+date[6:8]
+    time = time[0:2]+":"+time[2:4]+":"+time[4:6]
+    image = file.pixel_array
+
+    return image
+
+    #return lastName, firstName, id,birthday, gender, date, time, image
+
+def loadNormalImage(filename):
+    image = cv2.imread(filename, 0)
+    return image
+
+def checkImage(image):
+    test = np.zeros(len(image[0]))
+    if image.shape[1] > image.shape[0]:
+        test = np.zeros((image.shape[1], image.shape[1]))
+        for i in range(len(image)):
+            test[i] = image[i]
+    else:
+        test = np.zeros((image.shape[0], image.shape[0]))
+        for i in range(len(image)):
+            for j in range(len(image[0])):
+                test[i][j] = image[i][j]
+    return test
