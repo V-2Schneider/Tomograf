@@ -5,7 +5,7 @@ Tu będzie instrukcja obsługi i autorzy, ale na wszystko przyjdzie czas
 
 Na 3.0 wszystko zrobione :)
 
-Na 4.0:no prawie 🤠
+Na 4.0: no prawie 🤠
 
 Aplikacja powinna pozwalać na odczyt i zapis uzyskanego obrazu w standardzie
 DICOM wraz z uwzględnieniem (możliwość wprowadzenia z interfejsu):
